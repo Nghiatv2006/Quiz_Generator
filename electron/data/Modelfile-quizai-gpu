@@ -1,0 +1,41 @@
+FROM quizai:latest
+
+# ══════════════════════════════════════════════════════════════
+#  QuizAI – Optimized for GTX 1650 4GB VRAM
+#  8B model cần ~4.2-4.7GB weights + KV cache
+#  Context 4096 → KV cache ~0.5GB → tổng ~4.7-5.2GB → partial GPU
+# ══════════════════════════════════════════════════════════════
+
+SYSTEM """Bạn là QuizAI – trợ lý AI chuyên biệt tích hợp trong hệ thống Quiz Generator V2, một ứng dụng quản lý thi trắc nghiệm dành cho giáo dục Việt Nam (Electron + React + SQL Server).
+
+LUẬT BẮT BUỘC khi được yêu cầu JSON:
+1. Chỉ xuất ra JSON hợp lệ. Không thêm bất kỳ text nào trước hoặc sau JSON.
+2. Không dùng markdown (không có ```json). Không giải thích. Không ghi chú.
+3. JSON phải parseable bởi JavaScript JSON.parse(). Kiểm tra lại trước khi trả lời.
+4. Không bao giờ để trailing comma (,}) hoặc key không có quotes.
+
+Khi chat thông thường: thân thiện, tiếng Việt, dễ hiểu."""
+
+# ── Tốc độ & chất lượng ───────────────────────────────────────
+PARAMETER temperature 0.2
+PARAMETER top_p 0.85
+PARAMETER repeat_penalty 1.1
+PARAMETER num_predict 2048
+
+# ── Memory: tối ưu cho 4GB VRAM ──────────────────────────────
+# Context 4096 đủ cho hầu hết prompt sinh câu hỏi (~3000 tokens)
+PARAMETER num_ctx 4096
+
+# Batch size nhỏ để giảm memory burst
+PARAMETER num_batch 256
+
+# ── GPU: yêu cầu Ollama load tối đa layers lên GPU ───────────
+# Với 8B Q4 model cần ~4.2GB + KV 4096 ~0.5GB = ~4.7GB
+# GTX 1650 có 4GB → ~26-28 layers lên GPU, phần còn lại CPU RAM
+# Tốc độ vẫn nhanh hơn CPU thuần vì bottleneck là layers đầu
+PARAMETER num_gpu 99
+
+# Stop tokens cho Llama 3
+PARAMETER stop <|start_header_id|>
+PARAMETER stop <|end_header_id|>
+PARAMETER stop <|eot_id|>

@@ -1,0 +1,55 @@
+{
+  "name": "quiz-generator-v2",
+  "version": "2.0.0",
+  "description": "Quiz Generator - Hệ thống sinh câu hỏi thi trắc nghiệm tích hợp AI",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev:renderer": "cd src && npx vite --port 5173",
+    "dev:electron": "npx wait-on tcp:5173 && cross-env NODE_ENV=development electron .",
+    "dev": "concurrently -k \"npm run dev:renderer\" \"npm run dev:electron\"",
+    "build:renderer": "cd src && npx vite build --outDir ../dist",
+    "build": "npm run build:renderer && electron-builder",
+    "start": "electron ."
+  },
+  "keywords": [
+    "quiz",
+    "generator",
+    "ai",
+    "electron",
+    "education"
+  ],
+  "author": "Quiz Generator Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1",
+    "vite": "^8.0.4",
+    "wait-on": "^9.0.4"
+  },
+  "build": {
+    "appId": "com.quizgenerator.app",
+    "productName": "Quiz Generator V2",
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon.png"
+    }
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.1",
+    "groq-sdk": "^1.1.2",
+    "jsonwebtoken": "^9.0.3",
+    "mssql": "^12.2.1",
+    "pdf-parse": "^2.4.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}

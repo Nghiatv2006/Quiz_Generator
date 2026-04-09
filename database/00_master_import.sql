@@ -1,0 +1,25 @@
+-- ============================================================
+-- QUIZ GENERATOR V2 - MASTER IMPORT (SQL SERVER)
+-- ============================================================
+-- HƯỚNG DẪN:
+--   Bước 1: Mở file 01_drop_and_create_tables.sql trong SSMS → Execute
+--   Bước 2: Mở file 02_views_triggers_procedures_seed.sql trong SSMS → Execute
+--
+-- LƯU Ý: SQL Server KHÔNG hỗ trợ lệnh SOURCE.
+--         Bạn cần chạy từng file riêng biệt trong SSMS.
+-- ============================================================
+--
+-- File 1: 01_drop_and_create_tables.sql
+--   ✅ Tạo database quiz_generator
+--   ✅ Drop 35 tables cũ (nếu có)
+--   ✅ Tạo 35 tables mới
+--
+-- File 2: 02_views_triggers_procedures_seed.sql
+--   ✅ 7 Views (topic_stats, leaderboard, exam_stats, question_analysis,
+--              user_performance, ai_usage_stats, cheating_overview)
+--   ✅ 10 Triggers (auto update counts, stats, risk scores)
+--   ✅ 7 Stored Procedures (dashboard, attempt detail, exam stats,
+--              prediction data, update level, add XP, update streak)
+--   ✅ Seed Data: 20 badges, 5 users, 5 topics, 20 tags,
+--                 5 câu hỏi mẫu, 1 bài thi mẫu
+-- ============================================================
